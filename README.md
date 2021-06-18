@@ -1,2 +1,3 @@
-# users-handling
+# USERS HANDLING FULLSACK WEB APP
+
 Fullstack Web App for handling users, with Spring and Angular : authentication, authorization, connexion...
