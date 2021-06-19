@@ -1,10 +1,10 @@
-package org.sliga.usershandling;
+package org.sliga.usersmanagement;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class UsersHandlingApplicationTests {
+class UsersManagementApplicationTests {
 
 	@Test
 	void contextLoads() {
