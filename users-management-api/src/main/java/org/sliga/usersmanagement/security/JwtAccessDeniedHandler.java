@@ -21,7 +21,7 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @Configuration
 public class JwtAccessDeniedHandler implements AccessDeniedHandler {
-    private static final Log logger = LogFactory.getLog(AccessDeniedHandler.class);
+    private static final Log logger = LogFactory.getLog(JwtAccessDeniedHandler.class);
 
     @Override
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {

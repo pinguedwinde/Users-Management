@@ -40,10 +40,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 return;
             }
             String token = authorizationHeader.substring(TOKEN_PREFIX.length());
-            String username  =  jwtTokenProvider.getSubjectFromToken(token);
-            if (jwtTokenProvider.isTokenValid(username, token) && Objects.isNull(SecurityContextHolder.getContext())){
-                List<GrantedAuthority> authorities = jwtTokenProvider.getAuthoritiesFromToken(token);
-                Authentication authentication = jwtTokenProvider.getAuthentication(username,authorities, request);
+            String username  =  this.jwtTokenProvider.getSubjectFromToken(token);
+            if (this.jwtTokenProvider.isTokenValid(username, token) && Objects.isNull(SecurityContextHolder.getContext())){
+                List<GrantedAuthority> authorities = this.jwtTokenProvider.getAuthoritiesFromToken(token);
+                Authentication authentication = this.jwtTokenProvider.getAuthentication(username,authorities, request);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }else{
                 SecurityContextHolder.clearContext();
