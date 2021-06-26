@@ -20,7 +20,7 @@ import java.util.Objects;
 
 import static org.sliga.usersmanagement.security.SecurityConstants.*;
 
-@Configuration
+@Component
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private final JwtTokenProvider jwtTokenProvider;
 

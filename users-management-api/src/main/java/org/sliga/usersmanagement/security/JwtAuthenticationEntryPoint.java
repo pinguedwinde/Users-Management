@@ -7,16 +7,18 @@ import org.sliga.usersmanagement.controller.response.HttpResponse;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Locale;
 
 import static org.sliga.usersmanagement.security.SecurityConstants.*;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 
-
+@Component
 public class JwtAuthenticationEntryPoint extends Http403ForbiddenEntryPoint {
     private static final Log logger = LogFactory.getLog(Http403ForbiddenEntryPoint.class);
 
@@ -26,7 +28,7 @@ public class JwtAuthenticationEntryPoint extends Http403ForbiddenEntryPoint {
         HttpResponse httpResponse = new HttpResponse.Builder()
                 .withStatusCode(FORBIDDEN.value())
                 .withHttpStatus(FORBIDDEN)
-                .withReason(FORBIDDEN.getReasonPhrase())
+                .withReason(FORBIDDEN.getReasonPhrase().toUpperCase(Locale.ROOT))
                 .withMessage(FORBIDDEN_MESSAGE)
                 .build();
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);

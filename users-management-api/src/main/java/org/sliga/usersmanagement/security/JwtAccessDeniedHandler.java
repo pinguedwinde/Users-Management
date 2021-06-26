@@ -9,17 +9,19 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Locale;
 
 import static org.sliga.usersmanagement.security.SecurityConstants.ACCESS_DENIED_MESSAGE;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
-@Configuration
+@Component
 public class JwtAccessDeniedHandler implements AccessDeniedHandler {
     private static final Log logger = LogFactory.getLog(JwtAccessDeniedHandler.class);
 
@@ -29,7 +31,7 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
         HttpResponse httpResponse = new HttpResponse.Builder()
                 .withStatusCode(UNAUTHORIZED.value())
                 .withHttpStatus(UNAUTHORIZED)
-                .withReason(UNAUTHORIZED.getReasonPhrase())
+                .withReason(UNAUTHORIZED.getReasonPhrase().toUpperCase(Locale.ROOT))
                 .withMessage(ACCESS_DENIED_MESSAGE)
                 .build();
         httpServletResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
