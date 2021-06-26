@@ -13,4 +13,39 @@ public class HttpResponse {
     private HttpStatus httpStatus;
     private String reason;
     private String message;
+
+    public static class Builder {
+        private int statusCode;
+        private HttpStatus httpStatus;
+        private String reason;
+        private String message;
+
+        public Builder withStatusCode(int statusCode){
+            this.statusCode = statusCode;
+            return this;
+        }
+
+        public Builder withHttpStatus (HttpStatus httpStatus){
+            this.httpStatus = httpStatus;
+            return this;
+        }
+
+        public Builder withReason (String reason){
+            this.reason = reason;
+            return this;
+        }
+        public Builder withMessage (String message){
+            this.message = message;
+            return this;
+        }
+
+        public HttpResponse build(){
+            HttpResponse httpResponse = new HttpResponse();
+            httpResponse.setStatusCode(this.statusCode);
+            httpResponse.setHttpStatus(this.httpStatus);
+            httpResponse.setReason(this.reason);
+            httpResponse.setMessage(this.message);
+            return httpResponse;
+        }
+    }
 }
