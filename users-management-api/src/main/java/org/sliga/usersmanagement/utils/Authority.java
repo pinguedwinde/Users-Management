@@ -1,4 +1,4 @@
-package org.sliga.usersmanagement.security.utils;
+package org.sliga.usersmanagement.utils;
 
 public class Authority {
     public static final String[] USER_AUTHORITIES = {"user:read"};

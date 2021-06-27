@@ -5,7 +5,7 @@ services:
     hostname: mysql-db
     restart: always
     environment:
-      - MYSQL_DATABASE=users_handling
+      - MYSQL_DATABASE=users_management
       - MYSQL_USER=user
       - MYSQL_PASSWORD=password
       - MYSQL_ROOT_PASSWORD=password
@@ -16,19 +16,6 @@ services:
     volumes:
       - mysql-data:/data/db
 
-# MYSQL Workbench
-  mysql-workbench:
-    image: ghcr.io/linuxserver/mysql-workbench
-    hostname: mysql-workbench
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/London
-    ports:
-      - 3000:3000
-    cap_add:
-      - IPC_LOCK
-    restart: unless-stopped
 # Names our volume
 volumes:
   mysql-data:

@@ -1,4 +1,4 @@
-package org.sliga.usersmanagement.security.utils;
+package org.sliga.usersmanagement.utils;
 
 import java.time.Duration;
 

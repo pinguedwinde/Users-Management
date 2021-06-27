@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Locale;
 
-import static org.sliga.usersmanagement.security.utils.SecurityConstants.ACCESS_DENIED_MESSAGE;
+import static org.sliga.usersmanagement.utils.SecurityConstants.ACCESS_DENIED_MESSAGE;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @Component

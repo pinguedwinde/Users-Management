@@ -25,24 +25,17 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.Objects;
 
-import static org.sliga.usersmanagement.security.utils.SecurityConstants.ACCESS_DENIED_MESSAGE;
+import static org.sliga.usersmanagement.utils.AuthConstants.*;
+import static org.sliga.usersmanagement.utils.SecurityConstants.ACCESS_DENIED_MESSAGE;
 import static org.springframework.http.HttpStatus.*;
 
 @RestControllerAdvice
 public class ExceptionHandling implements ErrorController {
     private static final Log logger = LogFactory.getLog(JwtAccessDeniedHandler.class);
 
-    public static final String ACCOUNT_LOCKED = "Your account has been locked. Please contact administration";
-    public static final String ACCOUNT_DISABLED = "Your has been disabled. If this is an error, please contact administration";
-    public static final String METHOD_IS_NOT_ALLOWED = "This request method is not allowed on this endpoint. Please send a %s request";
+    public static final String METHOD_IS_NOT_ALLOWED = "This request method is not allowed on this endpoint. Please send a '%s' request";
     public static final String INTERNAL_SERVER_MESSAGE = "An error occurred while processing the request.";
-    public static final String BAD_CREDENTIALS = "Username or Password incorrect. Please try again";
     public static final String ERROR_PROCESSING_FILE = "Error occurred while processing file";
-    public static final String NOT_ENOUGH_PERMISSION = "You do not have enough permissions";
-    public static final String USERNAME_ALREADY_EXISTS = "This username is already taken";
-    public static final String EMAIL_ALREADY_EXISTS = "This email address is already taken";
-    public static final String USER_NOT_FOUND = "This user was not found";
-    public static final String EMAIL_NOT_FOUND = "This email was not found";
     public static final String NO_HANDLER_FOR_THIS_PATH = "There is no mapping for this URL";
     @Value("${server.error.path}")
     public static final String ERROR_PATH = "/error";

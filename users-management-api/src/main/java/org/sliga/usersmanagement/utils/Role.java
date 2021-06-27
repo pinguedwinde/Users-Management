@@ -1,6 +1,6 @@
-package org.sliga.usersmanagement.security.utils;
+package org.sliga.usersmanagement.utils;
 
-import static org.sliga.usersmanagement.security.utils.Authority.*;
+import static org.sliga.usersmanagement.utils.Authority.*;
 
 public enum Role {
 

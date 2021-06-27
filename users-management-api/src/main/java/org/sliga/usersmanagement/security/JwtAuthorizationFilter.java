@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-import static org.sliga.usersmanagement.security.utils.SecurityConstants.*;
+import static org.sliga.usersmanagement.utils.SecurityConstants.*;
 
 @Component
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
