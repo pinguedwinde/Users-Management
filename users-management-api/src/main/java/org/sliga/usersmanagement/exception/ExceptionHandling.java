@@ -36,6 +36,10 @@ public class ExceptionHandling {
     public static final String BAD_CREDENTIALS = "Username or Password incorrect. Please try again";
     public static final String ERROR_PROCESSING_FILE = "Error occurred while processing file";
     public static final String NOT_ENOUGH_PERMISSION = "You do not have enough permissions";
+    public static final String USERNAME_ALREADY_EXISTS = "This username is already taken";
+    public static final String USER_NOT_FOUND = "This user was not found";
+    public static final String EMAIL_ALREADY_EXISTS = "This email address is already taken";
+    public static final String EMAIL_NOT_FOUND = "This email was not found";
 
     @ExceptionHandler(DisabledException.class)
     public ResponseEntity<HttpResponse> accountDisabledExceptionHandler(){
