@@ -6,6 +6,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.sliga.usersmanagement.controller.response.HttpResponse;
 import org.sliga.usersmanagement.security.JwtAccessDeniedHandler;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +17,10 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.persistence.NoResultException;
 import java.io.IOException;
@@ -26,7 +31,7 @@ import static org.sliga.usersmanagement.security.SecurityConstants.ACCESS_DENIED
 import static org.springframework.http.HttpStatus.*;
 
 @RestControllerAdvice
-public class ExceptionHandling {
+public class ExceptionHandling implements ErrorController {
     private static final Log logger = LogFactory.getLog(JwtAccessDeniedHandler.class);
 
     public static final String ACCOUNT_LOCKED = "Your account has been locked. Please contact administration";
@@ -40,6 +45,9 @@ public class ExceptionHandling {
     public static final String USER_NOT_FOUND = "This user was not found";
     public static final String EMAIL_ALREADY_EXISTS = "This email address is already taken";
     public static final String EMAIL_NOT_FOUND = "This email was not found";
+    public static final String NO_HANDLER_FOR_THIS_PATH = "There is no mapping for this URL";
+    @Value("${server.error.path}")
+    public static final String ERROR_PATH = "/error";
 
     @ExceptionHandler(DisabledException.class)
     public ResponseEntity<HttpResponse> accountDisabledExceptionHandler(){
@@ -120,4 +128,15 @@ public class ExceptionHandling {
                 .build();
         return new ResponseEntity<>(httpResponse, httpStatus);
     }
+
+    @RequestMapping(ERROR_PATH)
+    public ResponseEntity<HttpResponse> noRestHandler(){
+        return createHttpResponse(NOT_FOUND, NO_HANDLER_FOR_THIS_PATH);
+    }
+
+    /*@ExceptionHandler(NoHandlerFoundException.class)
+    public ResponseEntity<HttpResponse> noHandlerFoundExceptionHandler(NoHandlerFoundException exception){
+        logger.error(exception.getMessage());
+        return createHttpResponse(BAD_REQUEST, exception.getMessage());
+    }*/
 }

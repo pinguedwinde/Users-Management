@@ -18,3 +18,5 @@ We also use JPA Repositories with Spring Data JPA for querying operations foward
 ## Exception Handling
 
 Here we custom the Exception and handle them in a sexier way and efficiently.
+
+- Use **`ErrorController`** with **`server.error.path=/error`** to handle **WhitLabel**.
