@@ -1,5 +1,7 @@
 package org.sliga.usersmanagement.utils;
 
+import com.google.common.cache.LoadingCache;
+
 public class AuthConstants {
     public static final String ACCOUNT_LOCKED = "Your account has been locked. Please contact administration";
     public static final String ACCOUNT_DISABLED = "Your has been disabled. If this is an error, please contact administration";
@@ -12,4 +14,6 @@ public class AuthConstants {
     public static final String FOUND_USER_BY_USERNAME = "Returning found user by username : ";
     public static final String NO_USER_FOUND_BY_USERNAME = "No user found by username : ";
     public static final String DEFAULT_USER_IMAGE_PATH = "/user/profile/image/temp";
+
+    public static final int MAXIMUM_NUMBER_OF_ATTEMPTS = 5;
 }
