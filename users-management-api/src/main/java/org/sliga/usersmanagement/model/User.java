@@ -32,11 +32,7 @@ public class User implements Serializable {
     private Date joinDate;
     private boolean isEnabled;
     private boolean isNonLocked;
-
-    @ElementCollection
-    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "id"))
-    @Column(name = "roles")
-    private List<String> roles = new ArrayList<>();
+    private String role;
 
     @ElementCollection
     @CollectionTable(name = "user_authorities", joinColumns = @JoinColumn(name = "id"))

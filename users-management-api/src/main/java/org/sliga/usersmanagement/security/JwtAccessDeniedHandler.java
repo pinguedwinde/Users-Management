@@ -4,11 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.sliga.usersmanagement.controller.response.HttpResponse;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
@@ -18,7 +16,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Locale;
 
-import static org.sliga.usersmanagement.security.SecurityConstants.ACCESS_DENIED_MESSAGE;
+import static org.sliga.usersmanagement.security.utils.SecurityConstants.ACCESS_DENIED_MESSAGE;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @Component

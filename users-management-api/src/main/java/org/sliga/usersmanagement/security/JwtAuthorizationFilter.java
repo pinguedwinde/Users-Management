@@ -1,7 +1,5 @@
 package org.sliga.usersmanagement.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -18,7 +16,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-import static org.sliga.usersmanagement.security.SecurityConstants.*;
+import static org.sliga.usersmanagement.security.utils.SecurityConstants.*;
 
 @Component
 public class JwtAuthorizationFilter extends OncePerRequestFilter {

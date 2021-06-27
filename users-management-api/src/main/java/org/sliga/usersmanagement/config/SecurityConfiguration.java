@@ -1,6 +1,7 @@
 package org.sliga.usersmanagement.config;
 
 import org.sliga.usersmanagement.security.*;
+import org.sliga.usersmanagement.security.utils.SecurityConstants;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

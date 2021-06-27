@@ -17,17 +17,15 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.persistence.NoResultException;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Objects;
 
-import static org.sliga.usersmanagement.security.SecurityConstants.ACCESS_DENIED_MESSAGE;
+import static org.sliga.usersmanagement.security.utils.SecurityConstants.ACCESS_DENIED_MESSAGE;
 import static org.springframework.http.HttpStatus.*;
 
 @RestControllerAdvice

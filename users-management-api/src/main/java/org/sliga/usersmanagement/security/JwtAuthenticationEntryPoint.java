@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Locale;
 
-import static org.sliga.usersmanagement.security.SecurityConstants.*;
+import static org.sliga.usersmanagement.security.utils.SecurityConstants.*;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 @Component
