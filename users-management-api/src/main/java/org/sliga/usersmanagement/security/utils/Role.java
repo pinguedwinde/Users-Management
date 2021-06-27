@@ -12,7 +12,7 @@ public enum Role {
 
     public final String[]  authorities;
 
-    Role(String[] authorities) {
+    Role(String... authorities) {
         this.authorities = authorities;
     }
 

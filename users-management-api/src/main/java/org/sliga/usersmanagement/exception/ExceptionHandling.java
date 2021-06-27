@@ -40,8 +40,8 @@ public class ExceptionHandling implements ErrorController {
     public static final String ERROR_PROCESSING_FILE = "Error occurred while processing file";
     public static final String NOT_ENOUGH_PERMISSION = "You do not have enough permissions";
     public static final String USERNAME_ALREADY_EXISTS = "This username is already taken";
-    public static final String USER_NOT_FOUND = "This user was not found";
     public static final String EMAIL_ALREADY_EXISTS = "This email address is already taken";
+    public static final String USER_NOT_FOUND = "This user was not found";
     public static final String EMAIL_NOT_FOUND = "This email was not found";
     public static final String NO_HANDLER_FOR_THIS_PATH = "There is no mapping for this URL";
     @Value("${server.error.path}")

@@ -1,6 +1,7 @@
 package org.sliga.usersmanagement.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder(toBuilder = true, builderClassName = "Builder")
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
@@ -38,4 +40,5 @@ public class User implements Serializable {
     @CollectionTable(name = "user_authorities", joinColumns = @JoinColumn(name = "id"))
     @Column(name = "authorities")
     private List<String> authorities = new ArrayList<>();
+
 }
