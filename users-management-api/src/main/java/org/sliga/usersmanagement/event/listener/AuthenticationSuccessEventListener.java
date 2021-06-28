@@ -22,7 +22,6 @@ public class AuthenticationSuccessEventListener implements ApplicationListener<A
 
     @Override
     public void onApplicationEvent(AuthenticationSuccessEvent authSuccessEvent) {
-        System.out.println("login success event fired.");
         Object principal = authSuccessEvent.getAuthentication().getPrincipal();
         if(principal instanceof UserPrincipal){
             String username = ((UserPrincipal) principal).getUsername();

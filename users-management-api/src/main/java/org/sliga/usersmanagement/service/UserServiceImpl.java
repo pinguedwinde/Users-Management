@@ -34,11 +34,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     public final LoginAttemptsService loginAttemptsService;
+    public final EmailService emailService;
 
-    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, LoginAttemptsService loginAttemptsService) {
+    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, LoginAttemptsService loginAttemptsService, EmailService emailService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.loginAttemptsService = loginAttemptsService;
+        this.emailService = emailService;
     }
 
     @Override
@@ -75,7 +77,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .authorities(Arrays.asList(ROLE_USER.authorities))
                 .profileImageUrl(getTemporaryUrl())
                 .build();
-        return this.userRepository.save(user);
+        User savedUser = this.userRepository.save(user);
+        this.emailService.sendWelcomeEmail(savedUser.getFirstName(), savedUser.getUsername(), savedUser.getEmail());
+        return savedUser;
     }
 
 
