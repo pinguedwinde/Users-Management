@@ -33,10 +33,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    public final LoginAttemptsService loginAttemptsService;
 
-    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, LoginAttemptsService loginAttemptsService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.loginAttemptsService = loginAttemptsService;
     }
 
     @Override
@@ -47,6 +49,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             logger.error(errorMessage);
             throw new UsernameNotFoundException(errorMessage);
         }else {
+            validateLoginAttempt(user);
             user.setLastLoginDateDisplay(user.getLastLoginDate());
             user.setLastLoginDate(new Date());
             this.userRepository.save(user);
@@ -101,6 +104,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private String getTemporaryUrl() {
         return ServletUriComponentsBuilder.fromCurrentContextPath().path("user/profile/image/temp").toUriString();
+    }
+
+    private void validateLoginAttempt(User user){
+        if(user.isNonLocked()){
+            if(loginAttemptsService.hasExceededMaxAttempts(user.getUsername())){
+                user.setNonLocked(false);
+            }
+        }else{
+            loginAttemptsService.evictUserFromLoginAttemptsCache(user.getUsername());
+        }
     }
 
     private Optional<User> validateNewUsernameAndEmail(String currentUsername, String newUsername, String newEmail) throws UserNotFoundException, UsernameExistException, EmailExistException {
