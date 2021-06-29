@@ -1,7 +1,7 @@
 package org.sliga.usersmanagement.service;
 
-import org.sliga.usersmanagement.model.LoginForm;
 import org.sliga.usersmanagement.model.User;
+import org.sliga.usersmanagement.model.UserForm;
 import org.sliga.usersmanagement.security.JwtTokenProvider;
 import org.sliga.usersmanagement.security.UserPrincipal;
 import org.springframework.http.HttpHeaders;
@@ -24,7 +24,7 @@ public class AuthService {
         this.userService = userService;
     }
 
-    public User loginUser(LoginForm loginForm){
+    public User loginUser(UserForm loginForm){
         authenticate(loginForm.getUsername(), loginForm.getPassword());
         return userService.findUserByUsername(loginForm.getUsername());
     }

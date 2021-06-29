@@ -4,9 +4,8 @@ import org.sliga.usersmanagement.exception.EmailExistException;
 import org.sliga.usersmanagement.exception.ExceptionHandling;
 import org.sliga.usersmanagement.exception.UserNotFoundException;
 import org.sliga.usersmanagement.exception.UsernameExistException;
-import org.sliga.usersmanagement.model.LoginForm;
-import org.sliga.usersmanagement.model.RegistrationForm;
 import org.sliga.usersmanagement.model.User;
+import org.sliga.usersmanagement.model.UserForm;
 import org.sliga.usersmanagement.security.UserPrincipal;
 import org.sliga.usersmanagement.service.AuthService;
 import org.sliga.usersmanagement.service.UserService;
@@ -41,13 +40,13 @@ public class UserController extends ExceptionHandling {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody RegistrationForm registrationForm) throws UserNotFoundException, EmailExistException, UsernameExistException {
-        User registeredUser = this.userService.register(registrationForm);
+    public ResponseEntity<User> registerUser(@RequestBody UserForm registerUserForm) throws UserNotFoundException, EmailExistException, UsernameExistException {
+        User registeredUser = this.userService.register(registerUserForm);
         return new ResponseEntity<>(registeredUser, CREATED);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> loginUser(@RequestBody LoginForm loginForm){
+    public ResponseEntity<User> loginUser(@RequestBody UserForm loginForm){
         User loggedInUser = authService.loginUser(loginForm);
         HttpHeaders jwtHeaders = authService.getJwtHeaders(new UserPrincipal(loggedInUser));
         return new ResponseEntity<>(loggedInUser, jwtHeaders, OK);

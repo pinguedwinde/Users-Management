@@ -10,10 +10,8 @@ public class AuthConstants {
     public static final String USERNAME_ALREADY_EXISTS = "This username is already taken";
     public static final String EMAIL_ALREADY_EXISTS = "This email address is already taken";
     public static final String USER_NOT_FOUND = "This user was not found";
-    public static final String EMAIL_NOT_FOUND = "This email was not found";
     public static final String FOUND_USER_BY_USERNAME = "Returning found user by username : ";
     public static final String NO_USER_FOUND_BY_USERNAME = "No user found by username : ";
-    public static final String DEFAULT_USER_IMAGE_PATH = "/user/profile/image/temp";
-
+    public static final String NO_USER_FOUND_BY_EMAIL = "No user found by email : ";
     public static final int MAXIMUM_NUMBER_OF_ATTEMPTS = 5;
 }
