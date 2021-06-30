@@ -16,8 +16,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Locale;
 
-import static org.sliga.usersmanagement.utils.SecurityConstants.ACCESS_DENIED_MESSAGE;
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+import static org.sliga.usersmanagement.utils.AuthConstants.ACCESS_DENIED_MESSAGE;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 @Component
 public class JwtAccessDeniedHandler implements AccessDeniedHandler {
@@ -27,13 +27,13 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
         logger.debug("Pre-authenticated : AccessDeniedHandler called. Rejecting access");
         HttpResponse httpResponse = new HttpResponse.Builder()
-                .withStatusCode(UNAUTHORIZED.value())
-                .withHttpStatus(UNAUTHORIZED)
-                .withReason(UNAUTHORIZED.getReasonPhrase().toUpperCase(Locale.ROOT))
+                .withStatusCode(FORBIDDEN.value())
+                .withHttpStatus(FORBIDDEN)
+                .withReason(FORBIDDEN.getReasonPhrase().toUpperCase(Locale.ROOT))
                 .withMessage(ACCESS_DENIED_MESSAGE)
                 .build();
         httpServletResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        httpServletResponse.setStatus(UNAUTHORIZED.value());
+        httpServletResponse.setStatus(FORBIDDEN.value());
         OutputStream outputStream = httpServletResponse.getOutputStream();
         ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(outputStream, httpResponse);

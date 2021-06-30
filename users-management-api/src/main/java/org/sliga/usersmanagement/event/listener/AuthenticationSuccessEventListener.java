@@ -25,7 +25,7 @@ public class AuthenticationSuccessEventListener implements ApplicationListener<A
         Object principal = authSuccessEvent.getAuthentication().getPrincipal();
         if(principal instanceof UserPrincipal){
             String username = ((UserPrincipal) principal).getUsername();
-            log.info("********* login successful for user {} ", username);
+            log.info("Login succeeded for user {} ", username);
             loginAttemptsService.evictUserFromLoginAttemptsCache(username);
         }
     }

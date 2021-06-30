@@ -15,8 +15,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Locale;
 
-import static org.sliga.usersmanagement.utils.SecurityConstants.*;
-import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.sliga.usersmanagement.utils.AuthConstants.UNAUTHORIZED_MESSAGE;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @Component
 public class JwtAuthenticationEntryPoint extends Http403ForbiddenEntryPoint {
@@ -26,13 +26,13 @@ public class JwtAuthenticationEntryPoint extends Http403ForbiddenEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
         logger.debug("Pre-authenticated : JwtAuthenticationEntryPoint called. Rejecting access");
         HttpResponse httpResponse = new HttpResponse.Builder()
-                .withStatusCode(FORBIDDEN.value())
-                .withHttpStatus(FORBIDDEN)
-                .withReason(FORBIDDEN.getReasonPhrase().toUpperCase(Locale.ROOT))
-                .withMessage(FORBIDDEN_MESSAGE)
+                .withStatusCode(UNAUTHORIZED.value())
+                .withHttpStatus(UNAUTHORIZED)
+                .withReason(UNAUTHORIZED.getReasonPhrase().toUpperCase(Locale.ROOT))
+                .withMessage(UNAUTHORIZED_MESSAGE)
                 .build();
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.setStatus(FORBIDDEN.value());
+        response.setStatus(UNAUTHORIZED.value());
         OutputStream outputStream = response.getOutputStream();
         ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(outputStream, httpResponse);

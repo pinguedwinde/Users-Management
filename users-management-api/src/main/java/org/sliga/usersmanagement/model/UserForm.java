@@ -18,8 +18,7 @@ public class UserForm {
     private String password;
     @NonNull
     private String email;
-    private String profileImageUrl;
-    private boolean isEnabled;
-    private boolean isNonLocked;
+    private Boolean isEnabled;
+    private Boolean isNonLocked;
     private String role;
 }

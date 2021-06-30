@@ -26,7 +26,7 @@ public class AuthenticationFailureListener implements ApplicationListener<Abstra
         Object principal = authFailureBadCredentialsEvent.getAuthentication().getPrincipal();
         if(principal instanceof String){
             String username = principal.toString();
-            log.info("********* login failed for user {} ", username);
+            log.info("Login failed for user {} ", username);
             loginAttemptsService.addUserToLoginAttemptsCache(username);
         }
     }

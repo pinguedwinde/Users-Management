@@ -23,7 +23,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    private final JwtTokenProvider jwtTokenProvider;
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
@@ -31,13 +30,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final BCryptPasswordEncoder passwordEncoder;
 
 
-    public SecurityConfiguration(JwtTokenProvider jwtTokenProvider,
-                                 JwtAuthorizationFilter jwtAuthorizationFilter,
+    public SecurityConfiguration(JwtAuthorizationFilter jwtAuthorizationFilter,
                                  JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
                                  JwtAccessDeniedHandler jwtAccessDeniedHandler,
                                  @Qualifier("UserDetailsService") UserDetailsService userDetailsService,
                                  BCryptPasswordEncoder passwordEncoder) {
-        this.jwtTokenProvider = jwtTokenProvider;
         this.jwtAuthorizationFilter = jwtAuthorizationFilter;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
         this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;

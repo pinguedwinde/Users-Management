@@ -72,39 +72,40 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User register(UserForm registerUserForm) throws UserNotFoundException, EmailExistException, UsernameExistException {
         validateNewUsernameAndEmail(StringUtils.EMPTY, registerUserForm.getUsername(), registerUserForm.getEmail());
-        registerUserForm.setEnabled(true);
-        registerUserForm.setNonLocked(true);
+        registerUserForm.setIsEnabled(true);
+        registerUserForm.setIsNonLocked(true);
         registerUserForm.setRole(ROLE_USER.name());
         User user = buildUserFromUserForm(registerUserForm);
         User savedUser = this.userRepository.save(user);
-        this.emailService.sendWelcomeEmail(savedUser.getFirstName(), savedUser.getUsername(), savedUser.getEmail());
+        //this.emailService.sendWelcomeEmail(savedUser.getFirstName(), savedUser.getUsername(), savedUser.getEmail());
         return savedUser;
     }
 
     @Override
-    public User addNewUser(UserForm newUserForm) throws UserNotFoundException, EmailExistException, UsernameExistException {
+    public User addNewUser(UserForm newUserForm, MultipartFile profileImage) throws UserNotFoundException, EmailExistException, UsernameExistException, IOException {
         validateNewUsernameAndEmail(StringUtils.EMPTY, newUserForm.getUsername(), newUserForm.getEmail());
         User user = buildUserFromUserForm(newUserForm);
         User savedUser = this.userRepository.save(user);
-        //saveProfileImageUrl(user, profileImage);
-        this.emailService.sendWelcomeEmail(savedUser.getFirstName(), savedUser.getUsername(), savedUser.getEmail());
+        saveProfileImageUrl(user, profileImage);
+        //this.emailService.sendWelcomeEmail(savedUser.getFirstName(), savedUser.getUsername(), savedUser.getEmail());
         return savedUser;
     }
 
     @Override
-    public User updateUser(UserForm updateUserForm) throws UserNotFoundException, EmailExistException, UsernameExistException {
+    public User updateUser(UserForm updateUserForm, MultipartFile profileImage) throws UserNotFoundException, EmailExistException, UsernameExistException, IOException {
         User currentUser = validateNewUsernameAndEmail(updateUserForm.getCurrentUsername(), updateUserForm.getUsername(), updateUserForm.getEmail())
                 .orElse(new User());
         currentUser.setFirstName(updateUserForm.getFirstName());
         currentUser.setLastName(updateUserForm.getLastName());
         currentUser.setUsername(updateUserForm.getUsername());
         currentUser.setEmail(updateUserForm.getEmail());
-        currentUser.setNonLocked(updateUserForm.isNonLocked());
-        currentUser.setEnabled(updateUserForm.isEnabled());
-        currentUser.setRole(updateUserForm.getRole());
-        currentUser.setAuthorities(Arrays.asList(Role.getRoleByString(updateUserForm.getRole()).authorities));
+        currentUser.setNonLocked(updateUserForm.getIsNonLocked());
+        currentUser.setEnabled(updateUserForm.getIsEnabled());
+        currentUser.setRole(Role.getRoleByString(updateUserForm.getRole()).getLabel());
+        currentUser.setAuthorities(new ArrayList<>(Arrays.asList(Role.getRoleByString(updateUserForm.getRole()).getAuthorities())));
         User updatedUser = this.userRepository.save(currentUser);
-        this.emailService.sendUpdateUserEmail(updatedUser.getFirstName(), updatedUser.getUsername(), updatedUser.getEmail());
+        saveProfileImageUrl(updatedUser, profileImage);
+        //this.emailService.sendUpdateUserEmail(updatedUser.getFirstName(), updatedUser.getUsername(), updatedUser.getEmail());
         return updatedUser;
     }
 
@@ -112,7 +113,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public User updateUserProfileImage(String username, MultipartFile profileImage) throws UserNotFoundException, EmailExistException, UsernameExistException, IOException {
         User user = validateNewUsernameAndEmail(username,null, null).orElseThrow();
         saveProfileImageUrl(user, profileImage);
-        return null;
+        return user;
     }
 
     @Override
@@ -129,7 +130,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         String password = generatePassword();
         user.setPassword(encodePassword(password));
         userRepository.save(user);
-        emailService.sendNewPasswordEmail(user.getFirstName(), user.getUsername(), user.getPassword(), user.getEmail());
+        //emailService.sendNewPasswordEmail(user.getFirstName(), user.getUsername(), user.getPassword(), user.getEmail());
     }
 
     @Override
@@ -176,7 +177,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private String setProfileImageUrl(String username){
         return ServletUriComponentsBuilder.fromCurrentContextPath().path(USER_IMAGE_PATH + username
-        + "/." + JPEG_EXTENSION).toUriString();
+                + "/" + username + "." + JPEG_EXTENSION).toUriString();
     }
 
     private String getTemporaryProfileImageUrl(String username) {
@@ -202,10 +203,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             if(Objects.isNull(currentUser)){
                 throw new UserNotFoundException(USER_NOT_FOUND);
             }
-            if(Objects.nonNull(userByNewUsername) && Objects.equals(currentUser.getId(), userByNewUsername.getId())){
+            if(Objects.nonNull(userByNewUsername) && !Objects.equals(currentUser.getId(), userByNewUsername.getId())){
                 throw new UsernameExistException(USERNAME_ALREADY_EXISTS);
             }
-            if(Objects.nonNull(userByNewEmail) && Objects.equals(currentUser.getId(), userByNewEmail.getId())){
+            if(Objects.nonNull(userByNewEmail) && !Objects.equals(currentUser.getId(), userByNewEmail.getId())){
                 throw new EmailExistException(EMAIL_ALREADY_EXISTS);
             }
             return Optional.of(currentUser);
@@ -229,11 +230,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .password(encodePassword(userForm.getPassword()))
                 .email(userForm.getEmail())
                 .joinDate(new Date())
-                .isEnabled(userForm.isEnabled())
-                .isNonLocked(userForm.isNonLocked())
-                .role(userForm.getRole())
+                .isEnabled(userForm.getIsEnabled())
+                .isNonLocked(userForm.getIsNonLocked())
+                .role(Role.getRoleByString(userForm.getRole()).getLabel())
                 .profileImageUrl(getTemporaryProfileImageUrl(userForm.getUsername()))
-                .authorities(Arrays.asList(Role.getRoleByString(userForm.getRole()).authorities))
+                .authorities(new ArrayList<>(Arrays.asList(Role.getRoleByString(userForm.getRole()).getAuthorities())))
                 .build();
     }
 }

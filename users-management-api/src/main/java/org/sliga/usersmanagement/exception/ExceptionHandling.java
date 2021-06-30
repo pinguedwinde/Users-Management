@@ -16,6 +16,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -26,12 +27,11 @@ import java.util.Locale;
 import java.util.Objects;
 
 import static org.sliga.usersmanagement.utils.AuthConstants.*;
-import static org.sliga.usersmanagement.utils.SecurityConstants.ACCESS_DENIED_MESSAGE;
 import static org.springframework.http.HttpStatus.*;
 
 @RestControllerAdvice
 public class ExceptionHandling implements ErrorController {
-    private static final Log logger = LogFactory.getLog(JwtAccessDeniedHandler.class);
+    private static final Log LOGGER = LogFactory.getLog(JwtAccessDeniedHandler.class);
 
     public static final String METHOD_IS_NOT_ALLOWED = "This request method is not allowed on this endpoint. Please send a '%s' request";
     public static final String INTERNAL_SERVER_MESSAGE = "An error occurred while processing the request.";
@@ -42,7 +42,7 @@ public class ExceptionHandling implements ErrorController {
 
     @ExceptionHandler(DisabledException.class)
     public ResponseEntity<HttpResponse> accountDisabledExceptionHandler(){
-        return createHttpResponse(BAD_REQUEST, ACCOUNT_DISABLED);
+        return createHttpResponse(FORBIDDEN, ACCOUNT_DISABLED);
     }
 
     @ExceptionHandler(LockedException.class)
@@ -81,8 +81,8 @@ public class ExceptionHandling implements ErrorController {
     }
 
     @ExceptionHandler(TokenExpiredException.class)
-    public ResponseEntity<HttpResponse> tokenExpiredExceptionHandler(TokenExpiredException exception){
-        return createHttpResponse(UNAUTHORIZED, exception.getMessage());
+    public ResponseEntity<HttpResponse> tokenExpiredExceptionHandler(){
+        return createHttpResponse(UNAUTHORIZED, TOKEN_EXPIRED_ERROR_MESSAGE);
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
@@ -92,22 +92,35 @@ public class ExceptionHandling implements ErrorController {
         return createHttpResponse(METHOD_NOT_ALLOWED, message);
     }
 
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<HttpResponse> missingRequestParams(MissingServletRequestParameterException exception) {
+        LOGGER.error(exception.getMessage());
+        return createHttpResponse(BAD_REQUEST, exception.getMessage());
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<HttpResponse> internalServerErrorExceptionHandler(Exception exception){
-        logger.error(exception.getMessage());
+        LOGGER.error(exception.getMessage());
+        exception.printStackTrace();
         return createHttpResponse(INTERNAL_SERVER_ERROR, INTERNAL_SERVER_MESSAGE);
     }
 
     @ExceptionHandler(NoResultException.class)
     public ResponseEntity<HttpResponse> notFoundExceptionHandler(NoResultException exception){
-        logger.error(exception.getMessage());
+        LOGGER.error(exception.getMessage());
         return createHttpResponse(NOT_FOUND, exception.getMessage());
     }
 
     @ExceptionHandler(IOException.class)
     public ResponseEntity<HttpResponse> ioExceptionHandler(IOException exception){
-        logger.error(exception.getMessage());
+        LOGGER.error(exception.getMessage());
         return createHttpResponse(INTERNAL_SERVER_ERROR, ERROR_PROCESSING_FILE);
+    }
+
+    @ExceptionHandler(NotAnImageFileException.class)
+    public ResponseEntity<HttpResponse> notAnImageFileException(NotAnImageFileException exception) {
+        LOGGER.error(exception.getMessage());
+        return createHttpResponse(BAD_REQUEST, exception.getMessage());
     }
 
     private ResponseEntity<HttpResponse> createHttpResponse(HttpStatus httpStatus, String message){

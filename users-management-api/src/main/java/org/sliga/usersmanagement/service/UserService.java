@@ -16,8 +16,8 @@ public interface UserService {
     List<User> getAllUsers();
     User findUserByUsername(String username);
     User findUserByEmail(String email);
-    User addNewUser(UserForm newUserForm) throws UserNotFoundException, EmailExistException, UsernameExistException;
-    User updateUser(UserForm updateUserForm) throws UserNotFoundException, EmailExistException, UsernameExistException;
+    User addNewUser(UserForm newUserForm, MultipartFile profileImage) throws UserNotFoundException, EmailExistException, UsernameExistException, IOException;
+    User updateUser(UserForm updateUserForm, MultipartFile profileImage) throws UserNotFoundException, EmailExistException, UsernameExistException, IOException;
     User updateUserProfileImage(String username, MultipartFile profileImage) throws UserNotFoundException, EmailExistException, UsernameExistException, IOException;
     void deleteUser(Long id);
     void resetPassword(String email) throws EmailNotFoundException;

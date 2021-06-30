@@ -3,6 +3,7 @@ package org.sliga.usersmanagement.utils;
 public class EmailConstants {
     public static final String EMAIL_ACCOUNT_USERNAME = "Your username";
     public static final String EMAIL_ACCOUNT_PASSWORD = "your passowrd";
+    public static final String EMAIL_SENT_NOTIFICATION = "Please check your emails. An email was sent to : ";
     public static final String SIMPLE_MAIL_TRANSFER_PROTOCOL = "smtps";
     public static final String EMAIL_ISSUER = "email@gmail.com";
     public static final String EMAIL_SUBJECT = "Welcome to Users Management LLC";

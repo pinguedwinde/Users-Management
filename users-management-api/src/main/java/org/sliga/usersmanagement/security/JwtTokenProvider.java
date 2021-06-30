@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 
 import static com.auth0.jwt.algorithms.Algorithm.HMAC256;
 import static org.sliga.usersmanagement.utils.SecurityConstants.*;
+import static org.sliga.usersmanagement.utils.AuthConstants.*;
 
 @Component
 public class JwtTokenProvider {
