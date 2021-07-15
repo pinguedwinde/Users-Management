@@ -4,10 +4,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.sliga.usersmanagement.exception.EmailExistException;
-import org.sliga.usersmanagement.exception.EmailNotFoundException;
-import org.sliga.usersmanagement.exception.UserNotFoundException;
-import org.sliga.usersmanagement.exception.UsernameExistException;
+import org.sliga.usersmanagement.exception.domain.*;
 import org.sliga.usersmanagement.model.User;
 import org.sliga.usersmanagement.model.UserForm;
 import org.sliga.usersmanagement.repository.UserRepository;
@@ -33,6 +30,7 @@ import java.util.*;
 import static org.sliga.usersmanagement.utils.AuthConstants.*;
 import static org.sliga.usersmanagement.utils.FileConstants.*;
 import static org.sliga.usersmanagement.utils.Role.ROLE_USER;
+import static org.springframework.http.MediaType.*;
 
 @Service
 @Transactional
@@ -82,7 +80,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User addNewUser(UserForm newUserForm, MultipartFile profileImage) throws UserNotFoundException, EmailExistException, UsernameExistException, IOException {
+    public User addNewUser(UserForm newUserForm, MultipartFile profileImage) throws UserNotFoundException, EmailExistException, UsernameExistException, IOException, NotAnImageFileException {
         validateNewUsernameAndEmail(StringUtils.EMPTY, newUserForm.getUsername(), newUserForm.getEmail());
         User user = buildUserFromUserForm(newUserForm);
         User savedUser = this.userRepository.save(user);
@@ -92,7 +90,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User updateUser(UserForm updateUserForm, MultipartFile profileImage) throws UserNotFoundException, EmailExistException, UsernameExistException, IOException {
+    public User updateUser(UserForm updateUserForm, MultipartFile profileImage) throws UserNotFoundException, EmailExistException, UsernameExistException, IOException, NotAnImageFileException {
         User currentUser = validateNewUsernameAndEmail(updateUserForm.getCurrentUsername(), updateUserForm.getUsername(), updateUserForm.getEmail())
                 .orElse(new User());
         currentUser.setFirstName(updateUserForm.getFirstName());
@@ -110,7 +108,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User updateUserProfileImage(String username, MultipartFile profileImage) throws UserNotFoundException, EmailExistException, UsernameExistException, IOException {
+    public User updateUserProfileImage(String username, MultipartFile profileImage) throws UserNotFoundException, EmailExistException, UsernameExistException, IOException, NotAnImageFileException {
         User user = validateNewUsernameAndEmail(username,null, null).orElseThrow();
         saveProfileImageUrl(user, profileImage);
         return user;
@@ -160,8 +158,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return RandomStringUtils.randomAlphabetic(10);
     }
 
-    private void saveProfileImageUrl(User user, MultipartFile profileImage) throws IOException {
+    private void saveProfileImageUrl(User user, MultipartFile profileImage) throws IOException, NotAnImageFileException {
         if (profileImage != null){
+            if(!Arrays.asList(IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE, IMAGE_GIF_VALUE).contains(profileImage.getContentType())) {
+                throw new NotAnImageFileException(profileImage.getOriginalFilename() + NOT_AN_IMAGE_FILE);
+            }
             Path userFolder = Paths.get(USER_FOLDER + user.getUsername()).toAbsolutePath().normalize();
             if (!Files.exists(userFolder)){
                 Files.createDirectories(userFolder);

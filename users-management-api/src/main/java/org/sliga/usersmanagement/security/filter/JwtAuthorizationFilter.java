@@ -1,6 +1,7 @@
-package org.sliga.usersmanagement.security;
+package org.sliga.usersmanagement.security.filter;
 
 import lombok.NonNull;
+import org.sliga.usersmanagement.security.JwtTokenProvider;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;

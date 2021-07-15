@@ -1,4 +1,4 @@
-package org.sliga.usersmanagement.exception;
+package org.sliga.usersmanagement.exception.domain;
 
 public class UsernameExistException extends Exception{
     public UsernameExistException(String message){

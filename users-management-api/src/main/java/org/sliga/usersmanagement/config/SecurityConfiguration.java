@@ -1,14 +1,13 @@
 package org.sliga.usersmanagement.config;
 
-import org.sliga.usersmanagement.security.*;
+import org.sliga.usersmanagement.security.filter.JwtAccessDeniedHandler;
+import org.sliga.usersmanagement.security.filter.JwtAuthenticationEntryPoint;
+import org.sliga.usersmanagement.security.filter.JwtAuthorizationFilter;
 import org.sliga.usersmanagement.utils.SecurityConstants;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

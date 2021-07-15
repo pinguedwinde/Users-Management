@@ -1,0 +1,101 @@
+<div class="container" style="margin-top: 100px">
+  <div class="d-flex justify-content-center">
+    <div class="col-md-7 col-sm-12">
+      <div class="card-group mb-0">
+        <div class="card user_card p-2">
+          <div class="d-flex justify-content-center">
+            <div style="margin-top: 10px; margin-bottom: -90px">
+              <h3>Users Management Portal</h3>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center form_container">
+            <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm.value)">
+              <div class="mb-3">
+                <div class="input-group">
+                  <span class="input-group-text"
+                    ><i class="fas fa-user"></i
+                  ></span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="username"
+                    placeholder="Username"
+                    ngModel
+                    #usernameInput="ngModel"
+                    required
+                  />
+                </div>
+                <div>
+                  <span
+                    class="error-bloc"
+                    *ngIf="usernameInput.invalid && usernameInput.touched"
+                    >Please enter a username</span
+                  >
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <div class="input-group">
+                  <span class="input-group-text"
+                    ><i class="fas fa-key"></i
+                  ></span>
+                  <input
+                    type="password"
+                    class="form-control"
+                    name="password"
+                    placeholder="Password"
+                    ngModel
+                    #passwordInput="ngModel"
+                    required
+                  />
+                </div>
+                <div>
+                  <span
+                    class="error-bloc"
+                    *ngIf="passwordInput.invalid && passwordInput.touched"
+                    >Please enter a password.</span
+                  >
+                </div>
+              </div>
+              <div class="d-flex justify-content-center mt-3 login_container">
+                <button
+                  type="submit"
+                  [disabled]="loginForm.invalid || showLoading"
+                  name="button"
+                  class="btn button-primary"
+                >
+                  <i *ngIf="showLoading" class="fas fa-spinner fa-spin"></i>
+                  <span *ngIf="showLoading">Loading...</span>
+                  <span *ngIf="!showLoading">Login</span>
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="mt-4">
+            <div class="d-flex justify-content-center">
+              <button type="button" class="btn btn-link px-0">
+                Forgot password?
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card text-white background-secondary py-5 d-md-down-none">
+          <div class="card-body text-center my-5">
+            <div class="my-4">
+              <h2>Sign up</h2>
+              <div class="text-center">Don't have an account?</div>
+              <button
+                type="button"
+                routerLink="/register"
+                class="btn button-primary active mt-3"
+              >
+                Register Now!
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

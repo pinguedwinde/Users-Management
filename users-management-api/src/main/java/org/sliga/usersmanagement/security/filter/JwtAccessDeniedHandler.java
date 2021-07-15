@@ -1,4 +1,4 @@
-package org.sliga.usersmanagement.security;
+package org.sliga.usersmanagement.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.logging.Log;

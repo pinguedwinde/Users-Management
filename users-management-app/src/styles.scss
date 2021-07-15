@@ -1,0 +1,168 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/regular.scss";
+@import "~@fortawesome/fontawesome-free/scss/brands.scss";
+
+@import "~mdb-angular-ui-kit/assets/scss/mdb.scss";
+
+@import "~angular-notifier/styles";
+
+:root {
+  --font-family: "Roboto", sans-serif;
+  --primary: #d50000;
+  --secondary: #686de0;
+  --accent: #f50057;
+  --lightgray: #ddd;
+  --text-regular: #444;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--text-regular);
+}
+
+/** Theming **/
+
+.button-primary,
+.background-primary {
+  background-color: var(--primary) !important;
+  color: #fff !important;
+}
+
+.button-secondary {
+  background-color: var(--secondary) !important;
+  color: #fff !important;
+}
+
+.background-secondary {
+  background-color: var(--accent) !important;
+  color: #fff !important;
+}
+
+button {
+  width: 150px !important;
+}
+
+button:disabled {
+  opacity: 0.4;
+  &:hover {
+    cursor: not-allowed;
+  }
+}
+
+button:focus {
+  box-shadow: none !important;
+  outline: 0px !important;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+td {
+  cursor: pointer;
+}
+.move-right {
+  position: absolute;
+  right: 0;
+}
+
+.move-left {
+  position: absolute;
+  left: 0;
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type="file"] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+
+.error-bloc {
+  color: var(--primary);
+}
+
+/*** **/
+
+.user_card {
+  height: 500px;
+  margin-top: auto;
+  margin-bottom: auto;
+  background: #ffffff;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
+}
+.brand_logo_container {
+  position: absolute;
+  height: 170px;
+  width: 170px;
+  top: -75px;
+  border-radius: 50%;
+  background: #60a3bc;
+  padding: 10px;
+  text-align: center;
+}
+.brand_logo {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+.form_container {
+  margin-top: 100px;
+}
+
+.login_container {
+  padding: 0 2rem;
+}
+.input-group-text {
+  background: var(--secondary) !important;
+  color: white !important;
+  border: 0 !important;
+  border-radius: 0.25rem 0 0 0.25rem !important;
+}
+.input_user,
+.input_pass:focus {
+  box-shadow: none !important;
+  outline: 0px !important;
+}
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+  background-color: var(--secondary) !important;
+}

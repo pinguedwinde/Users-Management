@@ -1,4 +1,4 @@
-package org.sliga.usersmanagement.exception;
+package org.sliga.usersmanagement.exception.domain;
 
 public class EmailNotFoundException extends Exception{
     public EmailNotFoundException(String message){

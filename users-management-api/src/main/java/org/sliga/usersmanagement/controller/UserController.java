@@ -2,6 +2,10 @@ package org.sliga.usersmanagement.controller;
 
 import org.sliga.usersmanagement.controller.response.HttpResponse;
 import org.sliga.usersmanagement.exception.*;
+import org.sliga.usersmanagement.exception.domain.EmailExistException;
+import org.sliga.usersmanagement.exception.domain.EmailNotFoundException;
+import org.sliga.usersmanagement.exception.domain.UserNotFoundException;
+import org.sliga.usersmanagement.exception.domain.UsernameExistException;
 import org.sliga.usersmanagement.model.User;
 import org.sliga.usersmanagement.model.UserForm;
 import org.sliga.usersmanagement.security.UserPrincipal;

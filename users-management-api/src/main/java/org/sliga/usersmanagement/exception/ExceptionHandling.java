@@ -5,7 +5,8 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.sliga.usersmanagement.controller.response.HttpResponse;
-import org.sliga.usersmanagement.security.JwtAccessDeniedHandler;
+import org.sliga.usersmanagement.exception.domain.*;
+import org.sliga.usersmanagement.security.filter.JwtAccessDeniedHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpMethod;
@@ -76,7 +77,7 @@ public class ExceptionHandling implements ErrorController {
     }
 
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<HttpResponse> userNotFoundExceptionHandler(EmailNotFoundException exception){
+    public ResponseEntity<HttpResponse> userNotFoundExceptionHandler(UserNotFoundException exception){
         return createHttpResponse(BAD_REQUEST, exception.getMessage());
     }
 
