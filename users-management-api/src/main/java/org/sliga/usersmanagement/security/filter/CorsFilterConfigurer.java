@@ -13,7 +13,7 @@ import static org.sliga.usersmanagement.utils.SecurityConstants.TOKEN_JWT_HEADER
 import static org.springframework.http.HttpHeaders.*;
 
 @Configuration
-public class CorsFilter {
+public class CorsFilterConfigurer {
 
     @Bean
     public org.springframework.web.filter.CorsFilter corsFilter() {
