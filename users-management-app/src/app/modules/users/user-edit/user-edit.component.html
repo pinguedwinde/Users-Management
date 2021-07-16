@@ -1,0 +1,138 @@
+<div class="modal-header">
+  <h5 class="modal-title text-center">
+    Edit {{ editUser?.firstName }} {{ editUser?.lastName }}
+    <small [hidden]="userService.isAdminOrManager"> (read only) </small>
+  </h5>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="modalRef.close()"
+  ></button>
+</div>
+<div class="modal-body">
+  <div>
+    <form #editUserForm="ngForm">
+      <div class="form-group my-2">
+        <label class="mb-2" for="firstName">First Name</label>
+        <input
+          type="text"
+          name="firstName"
+          [disabled]="!userService.isAdminOrManager"
+          required
+          [(ngModel)]="editUser.firstName"
+          class="form-control"
+        />
+      </div>
+      <div class="form-group my-2">
+        <label class="mb-2" for="lastName">Last Name</label>
+        <input
+          type="text"
+          name="lastName"
+          [disabled]="!userService.isAdminOrManager"
+          required
+          [(ngModel)]="editUser.lastName"
+          class="form-control"
+        />
+      </div>
+      <div class="form-group my-2">
+        <label class="mb-2" for="username">Username</label>
+        <input
+          type="text"
+          name="username"
+          [disabled]="!userService.isAdminOrManager"
+          required
+          [(ngModel)]="editUser.username"
+          class="form-control"
+        />
+      </div>
+      <div class="form-group my-2">
+        <label class="mb-2" for="email">Email</label>
+        <input
+          type="email"
+          name="email"
+          [disabled]="!userService.isAdminOrManager"
+          required
+          [(ngModel)]="editUser.email"
+          class="form-control"
+        />
+      </div>
+      <div class="form-group my-2">
+        <label class="mb-2" for="authority"
+          >Role <small [hidden]="userService.isAdmin">(read only)</small></label
+        >
+        <select
+          name="role"
+          [disabled]="!userService.isAdmin"
+          required
+          [(ngModel)]="editUser.role"
+          class="form-control"
+        >
+          <option value="ROLE_USER">USER</option>
+          <option value="ROLE_HR">HR</option>
+          <option value="ROLE_MANAGER">MANAGER</option>
+          <option value="ROLE_ADMIN">ADMIN</option>
+          <option value="ROLE_SUPER_ADMIN">SUPER ADMIN</option>
+        </select>
+      </div>
+      <div class="input-group my-3">
+        <label class="input-group-text">Profile Picture</label>
+        <input
+          type="file"
+          class="form-control"
+          accept="image/*"
+          id="profileImage"
+          [disabled]="!userService.isAdminOrManager"
+          (change)="
+            onProfileImageChange(
+              $event.target.files[0].name,
+              $event.target.files[0]
+            )
+          "
+        />
+        <label class="input-group-text" for="profileImage">Browse</label>
+      </div>
+      <fieldset class="form-group">
+        <div class="form-check">
+          <label class="form-check-label">
+            <input
+              name="active"
+              type="checkbox"
+              [disabled]="!userService.isManager"
+              [(ngModel)]="editUser.enabled"
+              class="form-check-input"
+            />
+            Acitve
+            <small [hidden]="userService.isManager">(read only)</small>
+          </label>
+        </div>
+        <div class="form-check disabled">
+          <label class="form-check-label">
+            <input
+              name="locked"
+              type="checkbox"
+              [disabled]="!userService.isManager"
+              [(ngModel)]="editUser.nonLocked"
+              class="form-check-input"
+            />
+            Unlocked
+            <small [hidden]="userService.isManager">(read only)</small>
+          </label>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn button-accent" (click)="modalRef.close()">
+    Close
+  </button>
+  <button
+    type="button"
+    class="btn button-secondary"
+    (click)="onUpdateUser()"
+    [disabled]="editUserForm.invalid || !userService.isAdminOrManager"
+  >
+    Save changes
+  </button>
+</div>

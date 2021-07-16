@@ -1,0 +1,125 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title text-center">
+      {{ selectedUser?.firstName }}
+      {{ selectedUser?.lastName }}
+    </h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div>
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 col-sm-auto">
+              <div class="mx-auto" style="width: 120px">
+                <div
+                  class="
+                    d-flex
+                    justify-content-center
+                    align-items-center
+                    rounded
+                  "
+                >
+                  <img
+                    class="rounded"
+                    height="120"
+                    width="120"
+                    src="{{ selectedUser?.profileImageUrl }}"
+                    alt="{{ selectedUser?.firstName }}"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="col d-flex flex-column flex-sm-row justify-content-between"
+            >
+              <div class="text-center text-sm-left mb-sm-0">
+                <h6 class="pt-sm-2 pb-1 mb-0 text-nowrap">
+                  {{ selectedUser?.firstName }}
+                  {{ selectedUser?.lastName }}
+                </h6>
+                <p class="mb-1">{{ selectedUser?.username }}</p>
+                <div class="">
+                  Status:
+                  <span
+                    [hidden]="!selectedUser?.enabled"
+                    class="badge badge-success"
+                    >Active</span
+                  >
+                  <span
+                    [hidden]="selectedUser?.enabled"
+                    class="badge badge-danger"
+                    >Inactive</span
+                  >
+                </div>
+                <div
+                  *ngIf="selectedUser?.lastLoginDateDisplay"
+                  class="text-muted"
+                >
+                  <small
+                    >Last Login:
+                    {{
+                      selectedUser?.lastLoginDateDisplay | date: "medium"
+                    }}</small
+                  >
+                </div>
+              </div>
+              <div class="text-center text-sm-right">
+                <div class="text-muted">
+                  <small
+                    >Joined
+                    {{ selectedUser?.joinDate | date: "mediumDate" }}</small
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"></li>
+          <li class="list-group-item">
+            <i class="fa fa-id-badge float-right me-2"></i
+            >{{ selectedUser?.userId }}
+          </li>
+          <li class="list-group-item">
+            <i class="fa fa-envelope float-right me-2"></i
+            >{{ selectedUser?.email }}
+          </li>
+          <li class="list-group-item">
+            <i class="fas fa-shield-alt float-right me-2"></i
+            >{{ selectedUser?.role.substring(5) }}
+          </li>
+          <li
+            *ngIf="selectedUser?.lastLoginDateDisplay"
+            class="list-group-item"
+          >
+            <i class="fas fa-sign-in-alt float-right me-2"></i
+            >{{ selectedUser?.lastLoginDateDisplay | date: "medium" }}
+          </li>
+          <li class="list-group-item">
+            <span [hidden]="selectedUser?.nonLocked">
+              <i class="fa fa-lock float-right me-2" style="color: red"> </i>
+              Account Locked
+            </span>
+            <span [hidden]="!selectedUser?.nonLocked">
+              <i class="fa fa-unlock float-right me-2" style="color: green">
+              </i>
+              Account Unlocked
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn button-accent" (click)="close()">
+      Close
+    </button>
+  </div>
+</div>

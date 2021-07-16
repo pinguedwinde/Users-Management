@@ -16,6 +16,6 @@ public interface UserService {
     User addNewUser(UserForm newUserForm, MultipartFile profileImage) throws UserNotFoundException, EmailExistException, UsernameExistException, IOException, NotAnImageFileException;
     User updateUser(UserForm updateUserForm, MultipartFile profileImage) throws UserNotFoundException, EmailExistException, UsernameExistException, IOException, NotAnImageFileException;
     User updateUserProfileImage(String username, MultipartFile profileImage) throws UserNotFoundException, EmailExistException, UsernameExistException, IOException, NotAnImageFileException;
-    void deleteUser(Long id);
+    void deleteUser(String username) throws IOException;
     void resetPassword(String email) throws EmailNotFoundException;
 }

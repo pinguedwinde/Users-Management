@@ -1,3 +1,7 @@
+import { AuthenticationService } from './../services/authentication.service';
+import { InjectFlags } from '@angular/core';
+import { Role } from '../enums/role.enum';
+
 export class User {
   public userId: string;
   public firstName: string;
@@ -9,10 +13,12 @@ export class User {
   public lastLoginDateDisplay: Date;
   public joinDate: Date;
   public profileImageUrl: string;
-  public active: boolean;
-  public notLocked: boolean;
+  public enabled: boolean;
+  public nonLocked: boolean;
   public role: string;
   public authorities: [];
+
+  private authenticationService: AuthenticationService;
 
   constructor() {
     this.userId = '';
@@ -24,8 +30,8 @@ export class User {
     this.lastLoginDateDisplay = null;
     this.joinDate = null;
     this.profileImageUrl = '';
-    this.active = false;
-    this.notLocked = false;
+    this.enabled = false;
+    this.nonLocked = false;
     this.role = '';
     this.authorities = [];
   }

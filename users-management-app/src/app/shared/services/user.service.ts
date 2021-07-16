@@ -1,3 +1,4 @@
+import { AuthenticationService } from './authentication.service';
 import { Injectable } from '@angular/core';
 import {
   HttpClient,
@@ -10,13 +11,17 @@ import { Observable } from 'rxjs';
 import { environment } from '@users-management-env/environment';
 import { User } from '../models/user.model';
 import { CustomHttpRespone } from '../models/custom-http-response.model';
+import { Role } from '../enums/role.enum';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private authenticationService: AuthenticationService
+  ) {}
 
   public getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.API_USER_BASE_URL}/list`);
+    return this.http.get<User[]>(`${environment.API_USER_BASE_URL}/all`);
   }
 
   public addUser(formData: FormData): Observable<User> {
@@ -35,13 +40,13 @@ export class UserService {
 
   public resetPassword(email: string): Observable<CustomHttpRespone> {
     return this.http.get<CustomHttpRespone>(
-      `${environment.API_USER_BASE_URL}/resetpassword/${email}`
+      `${environment.API_USER_BASE_URL}/reset-password/${email}`
     );
   }
 
   public updateProfileImage(formData: FormData): Observable<HttpEvent<User>> {
     return this.http.post<User>(
-      `${environment.API_USER_BASE_URL}/updateProfileImage`,
+      `${environment.API_USER_BASE_URL}/update/profile/image`,
       formData,
       { reportProgress: true, observe: 'events' }
     );
@@ -77,8 +82,27 @@ export class UserService {
     formData.append('email', user.email);
     formData.append('role', user.role);
     formData.append('profileImage', profileImage);
-    formData.append('isEnabled', JSON.stringify(user.active));
-    formData.append('isNonLocked', JSON.stringify(user.notLocked));
+    formData.append('isEnabled', JSON.stringify(user.enabled));
+    formData.append('isNonLocked', JSON.stringify(user.nonLocked));
     return formData;
+  }
+
+  public get isAdmin(): boolean {
+    return (
+      this.getUserRole() === Role.ADMIN ||
+      this.getUserRole() === Role.SUPER_ADMIN
+    );
+  }
+
+  public get isManager(): boolean {
+    return this.isAdmin || this.getUserRole() === Role.MANAGER;
+  }
+
+  public get isAdminOrManager(): boolean {
+    return this.isAdmin || this.isManager;
+  }
+
+  private getUserRole(): string {
+    return this.authenticationService.getUserFromLocalCache().role;
   }
 }

@@ -38,9 +38,15 @@ body {
 /** Theming **/
 
 .button-primary,
+.button-lg-primary,
 .background-primary {
   background-color: var(--primary) !important;
   color: #fff !important;
+}
+
+.button-primary {
+  min-width: 200px !important;
+  max-width: 300px !important;
 }
 
 .button-secondary {
@@ -48,13 +54,19 @@ body {
   color: #fff !important;
 }
 
-.background-secondary {
+.button-accent {
   background-color: var(--accent) !important;
   color: #fff !important;
 }
 
-button {
-  width: 150px !important;
+.background-accent {
+  background-color: var(--secondary) !important;
+  color: #fff !important;
+}
+
+.background-accent {
+  background-color: var(--accent) !important;
+  color: #fff !important;
 }
 
 button:disabled {
@@ -156,13 +168,35 @@ td {
   background: var(--secondary) !important;
   color: white !important;
   border: 0 !important;
-  border-radius: 0.25rem 0 0 0.25rem !important;
 }
 .input_user,
 .input_pass:focus {
   box-shadow: none !important;
   outline: 0px !important;
 }
-.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
-  background-color: var(--secondary) !important;
+
+/*** ****/
+.form-control:focus {
+  border-color: var(--secondary) !important;
+  box-shadow: inset 0px 0px 0px 1px var(--secondary) !important;
+}
+
+.form-check-input[type="checkbox"]:checked,
+.form-check-input[type="checkbox"]:focus {
+  background-image: none;
+  background-color: var(--accent);
+}
+
+.form-check-input:checked,
+.form-check-input:focus,
+.form-check-input[type="checkbox"]:checked:focus {
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: var(--secondary);
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
 }
