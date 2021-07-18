@@ -50,6 +50,16 @@
           class="form-control"
         />
       </div>
+      <div class="form-group my-2">
+        <label class="mb-2" for="password">Password</label>
+        <input
+          type="password"
+          name="password"
+          required
+          ngModel
+          class="form-control"
+        />
+      </div>
       <div *ngIf="userService.isAdmin" class="form-group my-2">
         <label class="mb-2" for="authority">Role</label>
         <select name="role" required ngModel="ROLE_USER" class="form-control">
@@ -92,7 +102,7 @@
           <label class="form-check-label">
             <input
               type="checkbox"
-              name="active"
+              name="enabled"
               ngModel
               class="form-check-input"
             />
@@ -103,7 +113,7 @@
           <label class="form-check-label">
             <input
               type="checkbox"
-              name="notLocked"
+              name="nonLocked"
               ngModel
               class="form-check-input"
             />

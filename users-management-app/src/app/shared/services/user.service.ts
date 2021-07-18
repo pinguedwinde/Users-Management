@@ -32,7 +32,7 @@ export class UserService {
   }
 
   public updateUser(formData: FormData): Observable<User> {
-    return this.http.post<User>(
+    return this.http.put<User>(
       `${environment.API_USER_BASE_URL}/update`,
       formData
     );
@@ -45,7 +45,7 @@ export class UserService {
   }
 
   public updateProfileImage(formData: FormData): Observable<HttpEvent<User>> {
-    return this.http.post<User>(
+    return this.http.put<User>(
       `${environment.API_USER_BASE_URL}/update/profile/image`,
       formData,
       { reportProgress: true, observe: 'events' }
@@ -80,6 +80,7 @@ export class UserService {
     formData.append('lastName', user.lastName);
     formData.append('username', user.username);
     formData.append('email', user.email);
+    formData.append('password', user.password);
     formData.append('role', user.role);
     formData.append('profileImage', profileImage);
     formData.append('isEnabled', JSON.stringify(user.enabled));

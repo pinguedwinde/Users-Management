@@ -44,6 +44,7 @@ export class UserAddComponent implements OnInit {
       userForm.value,
       this.profileImage
     );
+
     this.subscriptions.push(
       this.userService.addUser(formData).subscribe(
         (response: User) => {

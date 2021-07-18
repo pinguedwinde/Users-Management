@@ -18,6 +18,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./user-edit.component.scss'],
 })
 export class UserEditComponent implements OnInit {
+  public title: string;
   public fileName: string;
   public profileImage: File;
   public fileStatus = new FileUploadStatus();
@@ -33,7 +34,9 @@ export class UserEditComponent implements OnInit {
     public userService: UserService,
     private notificationService: NotificationService
   ) {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.title = `${this.editUser.firstName} ${this.editUser.lastName}`;
+  }
 
   close(): void {
     this.modalRef.close();
